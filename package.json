@@ -1,0 +1,15 @@
+{
+  "name": "resto",
+  "version": "1.0.0",
+  "description": "- Usuarios\r - Roles\r - Menu\r - Registro_cobros\r - Mesas\r - Pedidos\r   create table hola(\r   id bigint unsigned not null auto_increment,\r   )\r   | mesa_id |mozo_id | id | menu | estado |",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mysql2": "^3.14.1",
+    "sequelize": "^6.37.7"
+  }
+}

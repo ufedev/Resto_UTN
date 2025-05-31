@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS cobros(
+    id INT NOT NULL AUTO_INCREMENT UNSIGNED,
+    pedido_id INT NOT NULL UNSIGNED,
+    metodo VARCHAR(60) NULL DEFAULT NULL,
+    monto FLOAT NOT NULL,
+    creado_el DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_cobro_pedido
+    FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
+    PRIMARY KEY (id)
+);

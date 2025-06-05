@@ -6,6 +6,10 @@ export class Base {
     static tabla = "BASE"
     static columns = []
 
+    constructor () {
+
+    }
+
     static async Query (stmt, options = {}) {
         try {
             const result = await conn.query(stmt, options)
@@ -56,10 +60,72 @@ export class Base {
     }
 
     static async FindOneBy (column, value) {
+        const consulta = `
+        SELECT * FROM ${this.tabla} 
+        WHERE ${column}="${value}" 
+        LIMIT 1
+        `
+
+        const res = await this.Query(consulta, {
+            type: QueryTypes.SELECT
+        })
+
+        if (res.mal) {
+            return {
+                mal: true,
+                error: "Hubo un error en la query"
+            }
+        }
+
+        if (res.result.length === 0) {
+            return {
+                mal: true,
+                error: 'No hay resultados'
+            }
+        }
+
+        const resultado = res.result[0]
+        const obj = new this()
+        this.columns.forEach((col) => {
+            obj[col] = resultado[col]
+        })
+
+        return {
+            mal: false,
+            result: obj
+        }
 
     }
     static async FindAllBy (column, value) {
+        const consulta = `
+        SELECT * FROM ${this.tabla}
+        WHERE ${column} = "${value}"
+        `
+        const res = await this.Query(consulta, {
+            type: QueryTypes.SELECT
+        })
 
+        if (res.mal) {
+            return {
+                mal: true,
+                error: "Hubo un error en la query"
+            }
+        }
+
+        const resultado_final = res.result.map((item) => {
+            const obj = new this()
+
+            this.columns.forEach((col) => {
+                obj[col] = item[col]
+            })
+
+            return obj
+        })
+
+        return {
+            mal: false,
+            result: resultado_final
+        }
     }
     static async FindAll () {
         const consulta = `
@@ -92,11 +158,47 @@ export class Base {
         }
     }
 
+    async Insert () {
+        const values = []
+        const cols = []
+
+        this.constructor.columns.forEach(col => {
+            if (col === 'id' || col === 'creado_en' || col === 'actualizado_en') return
+
+            values.push(this[col])
+            cols.push(col)
+        })
+
+        const consulta = `
+        INSERT INTO ${this.constructor.tabla} (${cols.join(',')})
+        VALUES ("${values.join('","')}")
+        `
+
+        console.log(consulta)
+
+    }
 
 
 }
 
 
+class Roles extends Base {
+    static tabla = 'roles'
+    static columns = ['id', 'nombre', 'descripcion', 'creado_en', 'actualizado_en']
+
+    constructor (nombre, descripcion) {
+        super()
+        this.nombre = nombre
+        this.descripcion = descripcion
+    }
+
+}
+
+
+
+const nuevo_rol = new Roles('ROOT', 'ELL ROOT')
+
+await nuevo_rol.Insert()
 
 
 

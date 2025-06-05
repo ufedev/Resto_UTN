@@ -30,7 +30,17 @@ export class Base {
         })
 
         if (res.mal) {
-            return "Hubo un error"
+            return {
+                mal: true,
+                erro: 'Hubo un error en la query'
+            }
+        }
+
+        if (res.result.length === 0) {
+            return {
+                mal: true,
+                err: 'No hay resultados'
+            }
         }
 
         const objetoSolo = res.result[0]
@@ -39,21 +49,54 @@ export class Base {
             obj[col] = objetoSolo[col]
         })
 
-        return obj
+        return {
+            mal: false,
+            result: obj
+        }
     }
 
+    static async FindOneBy (column, value) {
+
+    }
+    static async FindAllBy (column, value) {
+
+    }
+    static async FindAll () {
+        const consulta = `
+        SELECT * FROM ${this.tabla}
+        `
+        const res = await this.Query(consulta, {
+            type: QueryTypes.SELECT
+        })
+
+        if (res.mal) {
+            return {
+                mal: true,
+                error: "Hubo un error en la query"
+            }
+        }
+
+        const resultado_final = res.result.map((item) => {
+            const obj = new this()
+
+            this.columns.forEach((col) => {
+                obj[col] = item[col]
+            })
+
+            return obj
+        })
+
+        return {
+            mal: false,
+            result: resultado_final
+        }
+    }
+
+
+
 }
 
 
-class Roles extends Base {
-    static tabla = "roles"
-    static columns = ["id", 'nombre', 'descripcion', 'creado_en', 'actualizado_en']
-}
-
-
-
-// const res = await Roles.FindOneById(3)
-// console.log(res)
 
 
 

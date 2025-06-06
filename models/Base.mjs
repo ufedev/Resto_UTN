@@ -174,9 +174,25 @@ export class Base {
         VALUES ("${values.join('","')}")
         `
 
-        console.log(consulta)
+        const res = await this.constructor.Query(consulta, {
+            type: QueryTypes.INSERT
+        })
+
+        if (res.mal) {
+            return {
+                mal: true,
+                error: res.err
+            }
+        }
+
+        return {
+            mal: false,
+            fin: "Insertado correctamente"
+        }
 
     }
+
+    async
 
 
 }
@@ -196,10 +212,13 @@ class Roles extends Base {
 
 
 
-const nuevo_rol = new Roles('ROOT', 'ELL ROOT')
+const nuevo_rol = new Roles('CAJERO', 'Cobrador sincronico')
 
-await nuevo_rol.Insert()
-
-
+const estado = await nuevo_rol.Insert()
 
 
+console.log(estado)
+
+const roles = await Roles.FindAll()
+
+console.log(roles)

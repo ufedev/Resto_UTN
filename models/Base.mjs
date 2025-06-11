@@ -9,7 +9,6 @@ export class Base {
     constructor () {
 
     }
-
     static async Query (stmt, options = {}) {
         try {
             const result = await conn.query(stmt, options)
@@ -24,7 +23,6 @@ export class Base {
             }
         }
     }
-
     static async FindOneById (id) {
         const consulta = `
         SELECT * FROM ${this.tabla} WHERE id=${id} LIMIT 1
@@ -58,7 +56,6 @@ export class Base {
             result: obj
         }
     }
-
     static async FindOneBy (column, value) {
         const consulta = `
         SELECT * FROM ${this.tabla} 
@@ -157,7 +154,6 @@ export class Base {
             result: resultado_final
         }
     }
-
     async Insert () {
         const values = []
         const cols = []
@@ -191,8 +187,48 @@ export class Base {
         }
 
     }
+    async Update () {
+        const arr = [1, 2, 3]
+        const ojbss = {
+            a: 1,
+            b: 2,
+            c: 3
+        }
+        arr[0]
+        ojbss["c"]
+        const nuevo_valores = []
+        this.constructor.columns.forEach(
+            (col) => {
+                if (col === 'id' || col === "creado_en" || col === "actualizado_en")
+                    return
+                const setter = `${col}="${this[col]}"`
+                nuevo_valores.push(setter)
+            }
+        )
 
-    async
+
+        const consulta = `
+        UPDATE ${this.constructor.tabla} SET
+        ${nuevo_valores.join(',')} WHERE id=${this.id}
+
+        `
+
+        console.log(consulta)
+        const res = await this.constructor.Query(consulta)
+
+        if (res.mal) {
+            return {
+                mal: true,
+                error: res.err
+            }
+        }
+
+        return {
+            mal: false,
+            fin: 'Actualizado'
+        }
+
+    }
 
 
 }
@@ -212,13 +248,13 @@ class Roles extends Base {
 
 
 
-const nuevo_rol = new Roles('CAJERO', 'Cobrador sincronico')
-
-const estado = await nuevo_rol.Insert()
 
 
-console.log(estado)
+const { result } = await Roles.FindAll()
+console.log(result)
+const admin = result[0]
 
+admin.nombre = "SUPER MEGA ADMIN"
+await admin.Update()
 const roles = await Roles.FindAll()
-
-console.log(roles)
+console.log(roles.result)

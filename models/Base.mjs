@@ -154,7 +154,7 @@ export class Base {
             result: resultado_final
         }
     }
-    async Insert () {
+    async #Insert () {
         const values = []
         const cols = []
 
@@ -187,7 +187,7 @@ export class Base {
         }
 
     }
-    async Update () {
+    async #Update () {
         const arr = [1, 2, 3]
         const ojbss = {
             a: 1,
@@ -213,7 +213,6 @@ export class Base {
 
         `
 
-        console.log(consulta)
         const res = await this.constructor.Query(consulta)
 
         if (res.mal) {
@@ -230,31 +229,32 @@ export class Base {
 
     }
 
+    async Save () {
 
-}
+        if (!this.id) {
+            return await this.#Insert()
+
+        } else {
+            return await this.#Update()
+        }
 
 
-class Roles extends Base {
-    static tabla = 'roles'
-    static columns = ['id', 'nombre', 'descripcion', 'creado_en', 'actualizado_en']
+    }
+    async Delete () {
+        const consulta = ``
 
-    constructor (nombre, descripcion) {
-        super()
-        this.nombre = nombre
-        this.descripcion = descripcion
+        // la ejecución de la consulta
+
+        // devolución del resultado
+
+
     }
 
+
+
 }
 
 
 
 
 
-const { result } = await Roles.FindAll()
-console.log(result)
-const admin = result[0]
-
-admin.nombre = "SUPER MEGA ADMIN"
-await admin.Update()
-const roles = await Roles.FindAll()
-console.log(roles.result)

@@ -7,9 +7,11 @@
   create table hola(
   id bigint unsigned not null auto_increment,
   )
-  | mesa_id |mozo_id | id | menu | estado |
-
-| ------- | ---------------- | ----------- | ------ |
-| 1 | "lkasjdsalkfjsd" | "[1,2,8,3]" | 1 |
 
 > Roles -> Admin, Caja, Mesero, Cocina
+
+| like_usuario_id | post_id |
+| --------------- | ------- |
+| 1               | 1       |
+| 1               | 2       |
+| 1               | 3       |

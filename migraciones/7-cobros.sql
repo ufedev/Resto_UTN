@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS cobros(
     pedido_id INT UNSIGNED NOT NULL ,
     metodo VARCHAR(60) NULL DEFAULT NULL,
     monto FLOAT NOT NULL,
-    creado_el DATETIME DEFAULT CURRENT_TIMESTAMP,
+    creado_el DATETIME DEFAULT NOW(),
     CONSTRAINT fk_cobro_pedido
     FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
     PRIMARY KEY (id)

@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS registro_pedido(
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
     pedido_id INT UNSIGNED NOT NULL,
     menu_id INT UNSIGNED NOT NULL,
-    creado_el TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    creado_el DATETIME DEFAULT NOW(),
     FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
     FOREIGN KEY (menu_id) REFERENCES menues(id),
     PRIMARY KEY (id)

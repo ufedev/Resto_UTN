@@ -6,9 +6,6 @@ export class Base {
     static tabla = "BASE"
     static columns = []
 
-    constructor () {
-
-    }
     static async Query (stmt, options = {}) {
         try {
             const result = await conn.query(stmt, options)
@@ -241,18 +238,63 @@ export class Base {
 
     }
     async Delete () {
-        const consulta = ``
-
+        const consulta = `DELETE FROM ${this.constructor.tabla} WHERE id="${this.id}"`
         // la ejecución de la consulta
+        const res = await this.constructor.Query(consulta)
+
+        if (res.mal) {
+            return {
+                mal: true,
+                error: "No se pudo ejecutar"
+            }
+        }
 
         // devolución del resultado
-
+        return {
+            mal: false
+        }
 
     }
 
+    static async Destroy (valor, column = "id", limite = 1)// Parametros 
+    {
 
+        // CONSULTA
+        const consulta = `
+        DELETE FROM ${this.tabla} WHERE ${column}="${valor}" LIMIT ${limite}
+        `
+        // EJECUCIÓN
+        const res = await this.Query(consulta)
 
+        // RESULTADO
+
+        return res
+    }
 }
+
+
+class Roles extends Base {
+    nombre = ""
+    descripcion = ""
+    static tabla = "roles"
+    static columns = ["id", "nombre", 'descripcion', "creado_en", "actualizado_en"]
+
+    constructor (nombre, descripcion) {
+        super()
+        this.nombre = nombre
+        this.descripcion = descripcion
+    }
+}
+
+// const rol_admin = new Roles("Admin", "El admin")
+// await rol_admin.Save()
+
+const { result: admin } = await Roles.FindOneBy("nombre", "Admin")
+
+console.log(admin)
+
+
+// await admin.Delete()
 
 
 

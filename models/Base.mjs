@@ -273,30 +273,6 @@ export class Base {
 }
 
 
-class Roles extends Base {
-    nombre = ""
-    descripcion = ""
-    static tabla = "roles"
-    static columns = ["id", "nombre", 'descripcion', "creado_en", "actualizado_en"]
-
-    constructor (nombre, descripcion) {
-        super()
-        this.nombre = nombre
-        this.descripcion = descripcion
-    }
-}
-
-// const rol_admin = new Roles("Admin", "El admin")
-// await rol_admin.Save()
-
-const { result: admin } = await Roles.FindOneBy("nombre", "Admin")
-
-console.log(admin)
-
-
-// await admin.Delete()
-
-
 
 
 

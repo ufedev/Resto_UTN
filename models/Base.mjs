@@ -1,6 +1,5 @@
 import { conn } from '../config/db.mjs'
 import { QueryTypes } from 'sequelize'
-
 export class Base {
 
     static tabla = "BASE"

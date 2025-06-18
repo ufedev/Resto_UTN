@@ -4,7 +4,7 @@ import { Sequelize } from 'sequelize' // para manejar la base de datos
 const conn = new Sequelize(
     "resto_utn",
     'root',
-    'aezakmi',
+    '123456',
     {
         dialect: 'mysql',
         logging: true

@@ -3,7 +3,7 @@ import { Sequelize } from "sequelize"
 export const conn = new Sequelize(
     "resto_utn",
     "root",
-    "123456",
+    "aezakmi",
     {
         dialect: "mysql",
         logging: false

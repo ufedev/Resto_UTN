@@ -155,7 +155,12 @@ export class Base {
         const cols = []
 
         this.constructor.columns.forEach(col => {
-            if (col === 'id' || col === 'creado_en' || col === 'actualizado_en') return
+            if (col === 'id' ||
+                col === 'creado_en' ||
+                col === 'actualizado_en' ||
+                col === "actualizado_el" ||
+                col === "creado_el" ||
+                col === "estado") return
 
             values.push(this[col])
             cols.push(col)

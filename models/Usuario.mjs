@@ -12,6 +12,7 @@ export class Usuario extends Base {
         this.password = password
         this.tel = tel
         this.rol_id = rol_id
+        this.estado = 1
     }
 
     async HashPassword () {

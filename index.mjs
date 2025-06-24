@@ -1,5 +1,5 @@
 import { input } from "./utils.mjs"
-
+import { registro } from "./controllers/registro.mjs"
 
 while (true) {
     console.clear()
@@ -15,7 +15,7 @@ while (true) {
     switch (opcion) {
         case "1":
             console.clear()
-            console.log("Opcion1")
+            await registro()
             await input("")
             break
         case "2":

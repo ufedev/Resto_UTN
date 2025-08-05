@@ -1,7 +1,7 @@
 # 1 Encuentra el medio
 
 Teniendo un arreglo de numeros enteros encuentra el valor del medio de este.
-Por ejemplo tenemos un arreglo [1,2,3,4,5] el valor del medio es 3
+Por ejemplo tenemos un arreglo [1,2,3,4,5] el valor del medio es 3 numero.toFixed(1)
 
 # 2 Números Primos
 
